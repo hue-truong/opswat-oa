@@ -47,7 +47,7 @@ class MD_Requester:
 
     #scan() -> None
     def scan(self):
-        print("Scanning...")
+        print(f'Uploading {self.filename}...')
         # Post file to endpoint
         headers = {
             'apikey': self.apikey,
@@ -65,6 +65,8 @@ class MD_Requester:
         # Grab id from response
         data_id = r.json()['data_id']
         
+        print(f'Scanning in progress...')
+        
         headers.clear()
         headers = {
             'apikey': self.apikey
@@ -74,6 +76,7 @@ class MD_Requester:
         try:
             # Keep hitting endpoint until server sends back progress 100
             while(progress_percentage != 100):
+                print(f'SCAN PROGRESS: {progress_percentage}%')
                 r = requests.get(f'{self.URL}/file/{data_id}', headers=headers)
                 r.raise_for_status()
                 progress_percentage = r.json()['scan_results']['progress_percentage']
@@ -88,7 +91,7 @@ class MD_Requester:
     def _format(self, r):
         overall_status = 'Clean' if r["scan_results"]["scan_all_result_a"] == 'No threat detected' else 'Threat detected'
 
-        print(f'filename: {r["file_info"]["display_name"]}')
+        print(f'filename: {self.filename}')
         print(f'overall_status: {overall_status}')
         for engine_name, res in r['scan_results']['scan_details'].items():
             threat_found = 'Clean' if res["threat_found"] == '' else res["threat_found"]
