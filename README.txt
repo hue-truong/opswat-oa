@@ -16,6 +16,13 @@ HOW TO USE:
 
 python3 scan.py [FILENAME]
 
-To insert API key, append key to "DT_API_KEY=" in the .env file
+To insert API key:
+    WINDOWS:
+        In project working directory: 
+        CMD: "set DT_API_KEY=[API KEY HERE]"
+        POWERSHELL: "$Env:DT_API_KEY=[API KEY HERE] "
+    UNIX:
+        Create a .env file in project folder that includes DT_API_KEY=[API KEY HERE]
+
 
 
