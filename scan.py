@@ -10,6 +10,14 @@ class MD_Requester:
         self.apikey = apikey
         self.filename = filename
         self.URL = 'https://api.metadefender.com/v4'
+        
+        try:
+            headers = { 'apikey': self.apikey }
+            r = requests.get(f'{self.URL}/apikey/', headers=headers)
+            r.raise_for_status()
+        except (requests.exceptions.RequestException, requests.exceptions.HTTPError) as e:
+            print("Error: Bad API key")
+            exit(e)
 
     # hash_lookup() -> bool
     def hash_lookup(self):
@@ -51,7 +59,7 @@ class MD_Requester:
             r.raise_for_status()
         except (requests.exceptions.RequestException, requests.exceptions.HTTPError) as e:
             print(e)
-            SystemExit(e)
+            exit(e)
 
         # Grab id from response
         data_id = r.json()['data_id']
@@ -70,7 +78,7 @@ class MD_Requester:
                 progress_percentage = r.json()['scan_results']['progress_percentage']
         except (requests.exceptions.RequestException, requests.exceptions.HTTPError) as e:
             print(e)
-            SystemExit(e)
+            exit(e)
 
         # Format and parse the response
         self._format(r.json())
@@ -94,8 +102,8 @@ class MD_Requester:
 
 if __name__ == '__main__':
     if len(sys.argv) != 2: 
-        print('COMMAND: python3 scan.py [FILENAME]')
-        SystemExit()
+        print('COMMAND USAGE: python3 scan.py [FILENAME]')
+        exit()
 
     # Get the API key from environment variables
     load_dotenv()
