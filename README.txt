@@ -17,7 +17,7 @@ HOW TO USE:
 python3 scan.py [FILENAME]
 
 To insert API key:
-        In .env file, include API key at DT_API_KEY=[API KEY HERE]
+        In the included .env file, insert API key at DT_API_KEY=[API KEY HERE]
 
 
 

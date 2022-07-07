@@ -21,6 +21,7 @@ class MD_Requester:
 
     # hash_lookup() -> bool
     def hash_lookup(self):
+        print("Looking up hash...")
         sha2hash = hashlib.sha256()
 
         # Calculate hash of the given file
@@ -34,7 +35,6 @@ class MD_Requester:
             r.raise_for_status()
         except requests.exceptions.HTTPError as e:
             print("Hash cannot be found")
-            print(e)
             return False
         except requests.exceptions.RequestException as e:
             print(e)
@@ -47,6 +47,7 @@ class MD_Requester:
 
     #scan() -> None
     def scan(self):
+        print("Scanning...")
         # Post file to endpoint
         headers = {
             'apikey': self.apikey,
